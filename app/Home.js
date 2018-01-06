@@ -1,58 +1,59 @@
 import React,{Component} from "react";
 //import {View,Text} from "react-native";
-import { Container, Header, Title, Content, Card, CardItem, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Tab, Tabs } from 'native-base';
+import { Container,Drawer, Header, Title, Content, Card, CardItem, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Tab, Tabs } from 'native-base';
+// import buatan sendiri
+import CardBox from "./modules/CardBox";
+import SideBar from "./modules/Sidebar";
+//import HeaderContent from "./template/HeaderContent";
+import FooterContent from "./template/FooterContent";
 
 export default class Home extends Component{
+
+  closeDrawer(){
+    this._drawer._root.close()
+  };
+  openDrawer(){
+    this._drawer._root.open()
+  };
+
   render()
   {
+
     return(
-      <Container>
-        <Header>
-          <Left>
-            <Button transparent>
-              <Icon name='menu' />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Header</Title>
-          </Body>
-          <Right />
-        </Header>
-        <Content>
-            <Tabs initialPage={1}>
-              <Tab heading="Tab1">
-                <Card>
-                    <CardItem header>
-                      <Text>NativeBase</Text>
-                    </CardItem>
-                    <CardItem>
-                      <Body>
-                        <Text>
-                          Tab 1
-                        </Text>
-                      </Body>
-                    </CardItem>
-                    <CardItem footer>
-                      <Text>GeekyAnts</Text>
-                    </CardItem>
-                 </Card>
-              </Tab>
-              <Tab heading="Tab2">
-                  <Text> Tab 2 </Text>
-              </Tab>
-              <Tab heading="Tab3">
-                  <Text> Tab 3 </Text>
-              </Tab>
-            </Tabs>
-        </Content>
-        <Footer>
-          <FooterTab>
-            <Button full>
-              <Text>Footer</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
-      </Container>
+      <Drawer
+       ref={(ref) => { this._drawer = ref; }}
+       content={<SideBar navigator={this._navigator} />}
+       onClose={() => this.closeDrawer()} >
+          <Container>
+            <Header>
+              <Left>
+                <Button transparent onPress={() => this.openDrawer()}>
+                  <Icon name='menu' />
+                </Button>
+              </Left>
+              <Body>
+                <Title> Yudhistira.id </Title>
+              </Body>
+              <Right />
+            </Header>
+            <Content>
+                <Tabs initialPage={0}>
+                  <Tab heading="Tab1">
+                    <CardBox tab="content dari card1" title="Title Card 1" />
+                    <CardBox tab="content dari card1" title="Title Card 1" />
+                    <CardBox tab="content dari card1" title="Title Card 1" />
+                  </Tab>
+                  <Tab heading="Tab2">
+                        <CardBox tab="content dari card2" title="Title Tab 2" />
+                  </Tab>
+                  <Tab heading="Tab3">
+                        <CardBox tab="content dari card3" title="Title Card 3" />
+                  </Tab>
+                </Tabs>
+            </Content>
+            <FooterContent />
+          </Container>
+      </Drawer>
 
     )
   }
